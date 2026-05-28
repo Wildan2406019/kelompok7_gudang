@@ -29,15 +29,15 @@ require 'cek.php';
                         <div class="nav">
                             <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Stock
+                                Stock Barang
                             </a>
                             <a class="nav-link" href="masuk.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Masuk
+                                Barang Masuk
                             </a>
                             <a class="nav-link" href="keluar.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Keluar
+                                Barang Keluar
                             </a>
                             <a class="nav-link" href="logout.php">
                                 Logout
@@ -69,19 +69,34 @@ require 'cek.php';
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
+                                            <th>Tanggal</th>
+                                            <th>Nama Barang</th>
+                                            <th>Jumlah</th>
+                                            <th>Penerima</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    
+                                    <?php
+                                        $ambilsemuadatastock = mysqli_query($conn, "select * from keluar k, stock s where s.idbarang = k.idbarang");
+                                        while($data=mysqli_fetch_array($ambilsemuadatastock)){
+                                            $tanggal = $data['tanggal'];
+                                            $namabarang = $data['namabarang'];
+                                            $qty = $data['qty'];
+                                            $penerima = $data['penerima'];
+
+                                        
+                                        ?>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
+                                            <td><?=$tanggal;?></td>
+                                            <td><?=$namabarang;?></td>
+                                            <td><?=$qty;?></td>
+                                            <td><?=$penerima;?></td>
                                         </tr>
+                                        <?php
+                                        };
+
+                                        ?>
                                 </table>
                             </div>
                         </div>
