@@ -29,15 +29,15 @@ require 'cek.php';
                         <div class="nav">
                             <a class="nav-link" href="index.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Stock
+                                Stock Barang
                             </a>
                             <a class="nav-link" href="masuk.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Masuk
+                                Barang Masuk
                             </a>
                             <a class="nav-link" href="keluar.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Keluar
+                                Barang Keluar
                             </a>
                             <a class="nav-link" href="logout.php">
                                 Logout
@@ -76,12 +76,29 @@ require 'cek.php';
                                         </tr>
                                     </thead>
                                     <tbody>
+
+                                        <?php
+                                        $ambilsemuadatastock = mysqli_query($conn, "select * from stock");
+                                        $i = 1;
+                                        while($data=mysqli_fetch_array($ambilsemuadatastock)){
+                                            $namabarang = $data['namabarang'];
+                                            $deskripsi = $data['deskripsi'];
+                                            $stock = $data['stock'];
+
+                                        
+                                        ?>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
+                                            <td><?=$i++;?></td>
+                                            <td><?=$namabarang;?></td>
+                                            <td><?=$deskripsi;?></td>
+                                            <td><?=$stock;?></td>
                                         </tr>
+                                        <?php
+                                        };
+
+                                        ?>
+
+
                                 </table>
                             </div>
                         </div>
