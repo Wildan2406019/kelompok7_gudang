@@ -1,1 +1,1 @@
-# Proyek Stok Barang Kelompok 7 
+# Proyek gudang stock barang - Kelompok 7 
