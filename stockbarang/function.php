@@ -94,46 +94,70 @@ if(isset($_POST['hapusbarang'])){
 }
 
 
-#mengubvah data barang masuk
-if(isset($_POST['updatebarangmasuk'])){
-    $idb = $_POST['idb'];
-    $idm = $_POST['idm'];
-    $deskripsi = $_POST['keterangan'];
-    $qty = $_POST['qty'];
+#mengubah data barang masuk
+if (isset($_POST['updatebarangmasuk'])) {
 
-    $lihatstock = mysqli_query($conn, "select * from stock where idbarang='$idb'");
-    $stocknya = mysqli_fetch_array($lihatstock);
-    $stockskrg = $stocknya['stock'];
+    $idb        = $_POST['idb'];
+    $idm        = $_POST['idm'];
+    $deskripsi  = $_POST['keterangan'];
+    $qty        = $_POST['qty'];
 
-    $qtyskrg = mysqli_query($conn, "select * from masuk where idmasuk='$idm'");
-    $qtynya = mysqli_fetch_array($qtyskrg);
-    $qtyskrg = $qtynya['qty'];
+    // Cek stock sekarang
+    $lihatstock = mysqli_query(
+        $conn,
+        "SELECT * FROM stock WHERE idbarang='$idb'"
+    );
 
-    if($qty>$qtyskrg){
-        $selisih = $qty-$qtyskrg;
-        $kurangin = $stockskrg - $selisih;
-        $kurangistocknya = mysqli_query($conn, "update stock set stock='$kurangin'");
-        $updatenya = mysqli_query($conn,"update masuk set qty='$qty' keterangan='$deskripsi' where idm='$idm'");
-            if($kurangistocknya&&$updatenya){
-                header('location:masuk.php');
-                } else {
-                    echo 'Gagal';
-                    header('location:masuk.php');
-              }
-     } else {
-          $selisih = $qtyskrg-$qty;
-          $kurangin = $stockskrg + $selisih;
-          $kurangistocknya = mysqli_query($conn, "update stock set stock='$kurangin'");
-          $updatenya = mysqli_query($conn,"update masuk set qty='$qty', keterangan='$deskripsi' where idmasuk='$idm'");
-              if($kurangistocknya&&$updatenya){
-                  header('location:masuk.php');
-                  } else {
-                      echo 'Gagal';
-                      header('location:masuk.php');
-                }
-     }
+    $stocknya   = mysqli_fetch_array($lihatstock);
+    $stockskrg  = $stocknya['stock'];
 
-  }
+    // Cek qty sebelumnya
+    $qtylama = mysqli_query(
+        $conn,
+        "SELECT * FROM masuk WHERE idmasuk='$idm'"
+    );
+
+    $qtylamaa = mysqli_fetch_array($qtylama);
+    $qtyskrg  = $qtylamaa['qty'];
+
+    // Jika qty baru lebih besar
+    if ($qty > $qtyskrg) {
+
+        $selisih   = $qty - $qtyskrg;
+        $stockbaru = $stockskrg + $selisih;
+
+    } else {
+
+        $selisih   = $qtyskrg - $qty;
+        $stockbaru = $stockskrg - $selisih;
+    }
+
+    // Update stock sesuai idbarang
+    $updatestock = mysqli_query(
+        $conn,
+        "UPDATE stock 
+         SET stock='$stockbaru'
+         WHERE idbarang='$idb'"
+    );
+
+    // Update tabel masuk
+    $updatemasuk = mysqli_query(
+        $conn,
+        "UPDATE masuk 
+         SET qty='$qty',
+             keterangan='$deskripsi'
+         WHERE idmasuk='$idm'"
+    );
+
+    if ($updatestock && $updatemasuk) {
+
+        header('location:masuk.php');
+
+    } else {
+
+        echo 'Gagal';
+    }
+}
   
 
 
