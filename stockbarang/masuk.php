@@ -97,24 +97,24 @@ require 'cek.php';
                                             <td><?=$qty;?></td>
                                             <td><?=$keterangan;?></td>
                                             <td>
-                                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?=$idb;?>">
+                                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?=$idm;?>">
                                                     Edit
                                                 </button>
-                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?=$idb;?>">
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?=$idm;?>">
                                                     Delete
                                                 </button>
                                             </td>
                                         </tr>
 
                                             <!--   Edit Modal -->
-                                                <div class="modal fade" id="edit<?=$idb;?>">
+                                                <div class="modal fade" id="edit<?=$idm;?>">
                                                     <div class="modal-dialog">
                                                     <div class="modal-content">
 
                                                         <!-- Modal Header -->
                                                         <div class="modal-header">
                                                         <h4 class="modal-title">Edit Barang</h4>
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                         </div>
 
                                                         <!-- Modal body -->
@@ -136,14 +136,14 @@ require 'cek.php';
                                             
 
                                                 <!-- Delete Modal-->
-                                                <div class="modal fade" id="delete<?=$idb;?>">
+                                                <div class="modal fade" id="delete<?=$idm;?>">
                                                     <div class="modal-dialog">
                                                     <div class="modal-content">
 
                                                         <!-- Modal Header -->
                                                         <div class="modal-header">
                                                         <h4 class="modal-title">Hapus Barang?</h4>
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                         </div>
 
                                                         <!-- Modal body -->
@@ -152,6 +152,7 @@ require 'cek.php';
                                                         Apakah Anda yakin ingin menghapus <?=$namabarang;?>?
                                                         <input type="hidden" name="idb" value="<?=$idb;?>">
                                                         <input type="hidden" name="kty" value="<?=$qty;?>">
+                                                        <input type="hidden" name="idm" value="<?=$idm;?>">
                                                         <br>
                                                         <br>
                                                         <button type="submit" class="btn btn-danger" name="hapusbarangmasuk">Hapus</button>
